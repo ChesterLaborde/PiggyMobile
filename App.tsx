@@ -8,50 +8,57 @@ import WalletScreen from './screens/WalletScreen';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
+import { StripeProvider } from '@stripe/stripe-react-native';
 
 const Tab = createBottomTabNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Tab.Navigator screenOptions={{ tabBarShowLabel: false, headerShown: false, tabBarStyle: styles.tabBar }} >
-        <Tab.Screen name='Piggys' component={HomeScreen} options={{
-          tabBarIcon: ({ focused }) => (
-            <View style={styles.item}>
-              <Text style={[styles.text, focused ? { fontWeight: 'bold'} : null]}>Piggys</Text>
-            </View>
-          )
-        }} />
-        <Tab.Screen name='Donations' component={DonationsScreen} options={{
-          tabBarIcon: ({ focused }) => (
-            <View style={styles.item}>
-              <Text style={[styles.text, focused ? { fontWeight: 'bold'} : null]}>Donations</Text>
-            </View>
-          )
-        }} />
-        <Tab.Screen name='QR' component={QrScreen} options={{
-          tabBarIcon: ({ focused }) => (
-            <View style={styles.circle}>
-              <Text>+</Text>
-            </View>
-          )
-        }} />
-        <Tab.Screen name='Trending' component={TrendingScreen} options={{
-          tabBarIcon: ({ focused }) => (
-            <View style={styles.item}>
-              <Text style={[styles.text, focused ? { fontWeight: 'bold'} : null]}>Trending</Text>
-            </View>
-          )
-        }} />
-        <Tab.Screen name='Wallet' component={WalletScreen} options={{
-          tabBarIcon: ({ focused }) => (
-            <View style={styles.item}>
-              <Text style={[styles.text, focused ? { fontWeight: 'bold'} : null]}>Wallet</Text>
-            </View>
-          )
-        }} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <StripeProvider 
+      publishableKey='pk_test_NcvZfGrfz03QycZSsImW6LcX00nnOwkBWM' 
+      urlScheme='example.com' 
+      merchantIdentifier='merchant.com.piggybank'
+      >
+      <NavigationContainer>
+        <Tab.Navigator screenOptions={{ tabBarShowLabel: false, headerShown: false, tabBarStyle: styles.tabBar }} >
+          <Tab.Screen name='Piggys' component={HomeScreen} options={{
+            tabBarIcon: ({ focused }) => (
+              <View style={styles.item}>
+                <Text style={[styles.text, focused ? { fontWeight: 'bold'} : null]}>Piggys</Text>
+              </View>
+            )
+          }} />
+          <Tab.Screen name='Donations' component={DonationsScreen} options={{
+            tabBarIcon: ({ focused }) => (
+              <View style={styles.item}>
+                <Text style={[styles.text, focused ? { fontWeight: 'bold'} : null]}>Donations</Text>
+              </View>
+            )
+          }} />
+          <Tab.Screen name='QR' component={QrScreen} options={{
+            tabBarIcon: ({ focused }) => (
+              <View style={styles.circle}>
+                <Text>+</Text>
+              </View>
+            )
+          }} />
+          <Tab.Screen name='Trending' component={TrendingScreen} options={{
+            tabBarIcon: ({ focused }) => (
+              <View style={styles.item}>
+                <Text style={[styles.text, focused ? { fontWeight: 'bold'} : null]}>Trending</Text>
+              </View>
+            )
+          }} />
+          <Tab.Screen name='Wallet' component={WalletScreen} options={{
+            tabBarIcon: ({ focused }) => (
+              <View style={styles.item}>
+                <Text style={[styles.text, focused ? { fontWeight: 'bold'} : null]}>Wallet</Text>
+              </View>
+            )
+          }} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </StripeProvider>
   )
 }
 

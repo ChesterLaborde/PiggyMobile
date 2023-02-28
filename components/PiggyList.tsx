@@ -1,5 +1,6 @@
-import React from 'react';
-import { View, Text, Image, FlatList, StyleSheet } from 'react-native';
+import { useStripe } from '@stripe/stripe-react-native';
+import React, { useEffect } from 'react';
+import { View, Text, Image, FlatList, StyleSheet, Pressable } from 'react-native';
 import PiggyText from './PiggyText';
 
 const DATA = [
@@ -29,12 +30,61 @@ const DATA = [
     },
 ]
 
+const API_URL = '';
 
 const PiggyList: React.FC = () => {
+    const { initPaymentSheet, presentPaymentSheet } = useStripe();
+
+    useEffect(() => {
+        initializePaymentSheet();
+    }, []);
+
+    const fetchPaymentSheetParams = async () => {
+        const response = await fetch(`${API_URL}/payment-sheet`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        const { paymentIntent, ephemeralKey, customer } = await response.json();
+
+        return {
+            paymentIntent,
+            ephemeralKey,
+            customer,
+        };
+    };
+
+    const initializePaymentSheet = async () => {
+        const {
+            paymentIntent,
+            ephemeralKey,
+            customer,
+            publishableKey,
+        } = await fetchPaymentSheetParams();
+
+        const { error } = await initPaymentSheet({
+            merchantDisplayName: "Example, Inc.",
+            customerId: customer,
+            customerEphemeralKeySecret: ephemeralKey,
+            paymentIntentClientSecret: paymentIntent,
+            // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
+            //methods that complete payment after a delay, like SEPA Debit and Sofort.
+            allowsDelayedPaymentMethods: true,
+            defaultBillingDetails: {
+                name: 'Jane Doe',
+            }
+        });
+    }
+
+    const onPress = async () => {
+        const { error } = await presentPaymentSheet();
+        console.log(error);
+    }
 
     const renderItem = ({ item }: { item: typeof DATA[number]}) => {
         return (
-            <View style={styles.container}>
+            <Pressable style={styles.container} onPress={onPress}>
                 <View style={styles.piggyContainer}>
                     <Image source={{ uri: item.img }} style={styles.img} />
                     <PiggyText>{item.title}</PiggyText>
@@ -44,7 +94,7 @@ const PiggyList: React.FC = () => {
                         <PiggyText style={{ textAlign: 'center'}}>{item.status}</PiggyText>
                     </View>
                 </View>
-            </View>
+            </Pressable>
         )
     }
 
