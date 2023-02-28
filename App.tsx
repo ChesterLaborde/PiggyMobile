@@ -18,14 +18,14 @@ const App = () => {
         <Tab.Screen name='Piggys' component={HomeScreen} options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.item}>
-              <Text style={styles.text}>Piggys</Text>
+              <Text style={[styles.text, focused ? { fontWeight: 'bold'} : null]}>Piggys</Text>
             </View>
           )
         }} />
         <Tab.Screen name='Donations' component={DonationsScreen} options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.item}>
-              <Text style={styles.text}>Donations</Text>
+              <Text style={[styles.text, focused ? { fontWeight: 'bold'} : null]}>Donations</Text>
             </View>
           )
         }} />
@@ -39,14 +39,14 @@ const App = () => {
         <Tab.Screen name='Trending' component={TrendingScreen} options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.item}>
-              <Text style={styles.text}>Trending</Text>
+              <Text style={[styles.text, focused ? { fontWeight: 'bold'} : null]}>Trending</Text>
             </View>
           )
         }} />
         <Tab.Screen name='Wallet' component={WalletScreen} options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.item}>
-              <Text style={styles.text}>Wallet</Text>
+              <Text style={[styles.text, focused ? { fontWeight: 'bold'} : null]}>Wallet</Text>
             </View>
           )
         }} />
