@@ -2,12 +2,16 @@ import React from 'react';
 import { SafeAreaView, View, Text, StyleSheet, Image, Pressable } from 'react-native'
 import PiggyText from '../components/PiggyText';
 
-const PiggyScreen: React.FC = () => {
+const PiggyScreen: React.FC = ({ navigation }) => {
+
+    const onPress = () => {
+        navigation.navigate('Donate');
+    }
     return (
         <SafeAreaView style={styles.container}>
             <Text numberOfLines={3} style={styles.txt}>Mateo needs help to buy a new camera for his youtube channel</Text>
             <Image source={{ uri: 'https://picsum.photos/seed/nacho/200'}} style={styles.img} />
-            <Pressable style={styles.btn}>
+            <Pressable style={styles.btn} onPress={onPress}>
                 <Text style={styles.btnTxt}>Donate</Text>
             </Pressable>
         </SafeAreaView>

@@ -16,6 +16,8 @@ import PiggyScreen from './screens/PiggyScreen';
 import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import DonateScreen from './screens/DonateScreen';
+import ThankYouScreen from './screens/ThankYouScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -26,6 +28,8 @@ const DonationFlow = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name='QRScreen' component={QrScreen} />
       <Stack.Screen name='Piggy' component={PiggyScreen} />
+      <Stack.Screen name='Donate' component={DonateScreen} />
+      <Stack.Screen name='ThankYou' component={ThankYouScreen} />
     </Stack.Navigator>
   )
 }
@@ -74,7 +78,7 @@ const AnonContainer = ({ setLoggedUser }) =>{
 
 const App = () => {
 
-  const [loggedUser, setLoggedUser] = useState();
+  const [loggedUser, setLoggedUser] = useState<boolean>();
 
   useEffect(() => {
     AsyncStorage.getItem('@token').then(res => {
@@ -101,7 +105,7 @@ const App = () => {
               </View>
             )
           }} />
-          <Tab.Screen name='Donations' component={DonationsScreen} options={{
+          <Tab.Screen name='Donations' component={DonateScreen} options={{
             tabBarIcon: ({ focused }) => (
               <View style={styles.item}>
                 <Text style={[styles.text, focused ? { fontWeight: 'bold'} : null]}>Donations</Text>
