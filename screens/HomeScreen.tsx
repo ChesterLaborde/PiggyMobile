@@ -1,8 +1,10 @@
-import React from 'react';
-import { View, Text, SafeAreaView, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, SafeAreaView, StyleSheet, Pressable } from 'react-native';
 import PiggyList from '../components/PiggyList';
 
 const HomeScreen: React.FC = () => {
+
+
     return (
         <SafeAreaView style={styles.container}>
             <PiggyList />
